@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 
+const db = require('./db')
+
 let win;
 
 function createWindow () {
@@ -32,16 +34,15 @@ app.on('activate', () => {
   }
 });
 
-const printers = []
-
 ipcMain.on('something-sent', (event, args) => {
   console.log("sent", args)
 })
 
-ipcMain.on('get-printers', (event, args) => {
+ipcMain.on('get-printers', async (event, args) => {
+  const printers = await db.printers.find({})
   event.returnValue = printers
 })
 
 ipcMain.on('add-printer', (event, args) => {
-  printers.push(args)
+  db.printers.insert(args)
 })
