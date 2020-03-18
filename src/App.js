@@ -30,6 +30,9 @@ function App() {
     setCurrentPrinter(printerInfo)
     setRegistering(false)
     ipcRenderer.send('add-printer', printerInfo)
+
+    const regPrinters = [...printers, printerInfo]
+    setPrinters(regPrinters)
   }
 
   const selectPrinter = (ip) => {
