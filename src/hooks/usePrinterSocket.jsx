@@ -8,6 +8,8 @@ export default function usePrinterSocket(printer){
   useEffect(() => {
     if(!printer) return 
 
+    setPrinterStatus()
+
     const sock = new SockJS(`http://${printer.ip}/sockjs`)
 
     sock.onopen = () => {
